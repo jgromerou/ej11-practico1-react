@@ -1,6 +1,6 @@
 import { Card, Form, Row, Col } from 'react-bootstrap';
 import './form-noticias.css';
-import GridNoticias from '../GridNoticias/GridNoticias';
+import GridNoticias from '../GridNoticias';
 
 const FormNoticias = () => {
   return (
