@@ -1,6 +1,7 @@
 import { Card, Row } from 'react-bootstrap';
+import CardNoticia from './CardNoticias/CardNoticia';
 
-const GridNoticias = () => {
+const GridNoticias = ({ noticias }) => {
   return (
     <>
       <Card className="mt-3">
@@ -8,7 +9,9 @@ const GridNoticias = () => {
           Categoria seleccionada: Deportes
         </Card.Title>
         <Row className="mb-4 mt-2 px-3">
-          {/* TODO: aquí va la lista de noticias que se trae de la consulta de la API */}
+          {noticias.map((noticia, index) => (
+            <CardNoticia key={index} noticia={noticia} />
+          ))}
         </Row>
       </Card>
     </>

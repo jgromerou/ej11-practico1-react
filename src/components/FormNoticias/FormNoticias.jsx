@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 const FormNoticias = () => {
   // https://newsdata.io/api/1/news?apikey=pub_23780f986c99c831d5da97ac5387f0936f5f1&q=pizza
 
-  const [noticias, setNoticias] = useState();
+  const [noticias, setNoticias] = useState([{}]);
 
   useEffect(() => {
     consultaAPI();
@@ -17,7 +17,7 @@ const FormNoticias = () => {
       `https://newsdata.io/api/1/news?apikey=pub_23780f986c99c831d5da97ac5387f0936f5f1&q=pizza`
     );
     const data = await resp.json();
-    console.log(data);
+    setNoticias(data.results);
   };
 
   return (
@@ -51,7 +51,7 @@ const FormNoticias = () => {
           </Form>
         </Card.Body>
       </Card>
-      <GridNoticias />
+      <GridNoticias noticias={noticias} />
     </>
   );
 };

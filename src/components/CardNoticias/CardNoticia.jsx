@@ -1,4 +1,4 @@
-import { Card, Col } from 'react-bootstrap';
+import { Card, Col, Button } from 'react-bootstrap';
 import './card-noticia.css';
 
 const CardNoticia = () => {
