@@ -9,3 +9,7 @@
 .paginaPrincipal {
   flex-grow: 1;
 }
+
+#newCard {
+  background: #f5f5f5;
+}
