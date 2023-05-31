@@ -1,8 +1,30 @@
 import { Card, Form, Row, Col } from 'react-bootstrap';
 import './form-noticias.css';
 import GridNoticias from '../GridNoticias';
+import { useEffect, useState } from 'react';
 
 const FormNoticias = () => {
+  // https://newsdata.io/api/1/news?apikey=pub_23780f986c99c831d5da97ac5387f0936f5f1&q=pizza
+
+  const [noticias, setNoticias] = useState();
+
+  useEffect(() => {
+    consultaAPI();
+  }, []);
+
+  const consultaAPI = async () => {
+    const resp = await fetch('https://newsdata.io/api/1/news', {
+      headers: { 'Content-Type': 'application/json' },
+      params: {
+        apikey: 'pub_23780f986c99c831d5da97ac5387f0936f5f1',
+        q: 'pizza',
+      },
+    });
+    const datos = await resp.json();
+    console.log(datos);
+    //setNoticias(datos);
+  };
+
   return (
     <>
       <Card>
