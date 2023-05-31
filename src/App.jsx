@@ -2,12 +2,13 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Container } from 'react-bootstrap';
 import './App.css';
 import Footer from './components/Footer';
+import FormNoticias from './components/FormNoticias/FormNoticias';
 
 function App() {
   return (
     <>
       <Container className="paginaPrincipal my-5">
-        <h1>Ejecicio 11: Web de Noticias</h1>
+        <FormNoticias />
       </Container>
       <Footer />
     </>
