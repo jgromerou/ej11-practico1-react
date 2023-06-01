@@ -1,4 +1,4 @@
-import { Card, Form, Row, Col, Button } from 'react-bootstrap';
+import { Card, Form, Row, Col, Button, Spinner } from 'react-bootstrap';
 import './form-noticias.css';
 import GridNoticias from '../GridNoticias';
 import { useState, useEffect } from 'react';
@@ -8,6 +8,7 @@ const FormNoticias = () => {
   const { register, handleSubmit } = useForm();
   const [noticias, setNoticias] = useState([]);
   const [categ, setCateg] = useState('');
+  const [mostrarSpinner, setMostrarSpinner] = useState(true);
 
   useEffect(() => {
     onSubmit();
@@ -15,6 +16,7 @@ const FormNoticias = () => {
 
   const onSubmit = async (datos = '') => {
     try {
+      setMostrarSpinner(true);
       const resp = await fetch(
         `https://newsdata.io/api/1/news?apikey=pub_23780f986c99c831d5da97ac5387f0936f5f1&q=${datos.categoria}`
       );
@@ -23,6 +25,7 @@ const FormNoticias = () => {
       if (datos !== '') {
         setCateg(datos.categoria);
       }
+      setMostrarSpinner(false);
     } catch (error) {
       console.log(error);
     }
@@ -65,7 +68,13 @@ const FormNoticias = () => {
           </Form>
         </Card.Body>
       </Card>
-      <GridNoticias noticias={noticias} categ={categ} />
+      {mostrarSpinner ? (
+        <div className="d-flex justify-content-center align-items-center my-3">
+          <Spinner animation="border" variant="primary" />
+        </div>
+      ) : (
+        <GridNoticias noticias={noticias} categ={categ} />
+      )}
     </>
   );
 };
