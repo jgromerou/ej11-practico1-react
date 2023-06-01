@@ -1,11 +1,15 @@
-import { Card, Form, Row, Col, Button, Spinner } from 'react-bootstrap';
+import { Card, Form, Row, Col, Button, Spinner, Alert } from 'react-bootstrap';
 import './form-noticias.css';
 import GridNoticias from '../GridNoticias';
 import { useState, useEffect } from 'react';
 import { useForm } from 'react-hook-form';
 
 const FormNoticias = () => {
-  const { register, handleSubmit } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [noticias, setNoticias] = useState([]);
   const [categ, setCateg] = useState('');
   const [mostrarSpinner, setMostrarSpinner] = useState(true);
@@ -58,10 +62,16 @@ const FormNoticias = () => {
                   <option value="science">Ciencia</option>
                   <option value="sports">Deportes</option>
                   <option value="health">Salud</option>
-                  <option value="technology">Tecnologia</option>
+                  <option value="technology">Tecnología</option>
                 </Form.Select>
+                {errors.categoria && (
+                  <Alert variant="danger" className="my-2">
+                    Por favor seleccione una Categoria...
+                  </Alert>
+                )}
               </Col>
             </Form.Group>
+
             <Button variant="primary" type="submit">
               Enviar
             </Button>
