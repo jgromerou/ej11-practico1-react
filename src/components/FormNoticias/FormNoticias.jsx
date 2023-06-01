@@ -7,6 +7,7 @@ import { useForm } from 'react-hook-form';
 const FormNoticias = () => {
   const { register, handleSubmit } = useForm();
   const [noticias, setNoticias] = useState([]);
+  const [categ, setCateg] = useState('');
 
   useEffect(() => {
     onSubmit();
@@ -19,6 +20,9 @@ const FormNoticias = () => {
       );
       const data = await resp.json();
       setNoticias(data.results);
+      if (datos !== '') {
+        setCateg(datos.categoria);
+      }
     } catch (error) {
       console.log(error);
     }
@@ -61,7 +65,7 @@ const FormNoticias = () => {
           </Form>
         </Card.Body>
       </Card>
-      <GridNoticias noticias={noticias} />
+      <GridNoticias noticias={noticias} categ={categ} />
     </>
   );
 };
