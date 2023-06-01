@@ -1,23 +1,27 @@
-import { Card, Form, Row, Col } from 'react-bootstrap';
+import { Card, Form, Row, Col, Button } from 'react-bootstrap';
 import './form-noticias.css';
 import GridNoticias from '../GridNoticias';
-import { useEffect, useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useForm } from 'react-hook-form';
 
 const FormNoticias = () => {
-  // https://newsdata.io/api/1/news?apikey=pub_23780f986c99c831d5da97ac5387f0936f5f1&q=pizza
-
-  const [noticias, setNoticias] = useState([{}]);
+  const { register, handleSubmit } = useForm();
+  const [noticias, setNoticias] = useState([]);
 
   useEffect(() => {
-    consultaAPI();
+    onSubmit();
   }, []);
 
-  const consultaAPI = async () => {
-    const resp = await fetch(
-      `https://newsdata.io/api/1/news?apikey=pub_23780f986c99c831d5da97ac5387f0936f5f1&q=pizza`
-    );
-    const data = await resp.json();
-    setNoticias(data.results);
+  const onSubmit = async (datos = '') => {
+    try {
+      const resp = await fetch(
+        `https://newsdata.io/api/1/news?apikey=pub_23780f986c99c831d5da97ac5387f0936f5f1&q=${datos.categoria}`
+      );
+      const data = await resp.json();
+      setNoticias(data.results);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -27,27 +31,33 @@ const FormNoticias = () => {
           <Card.Title className="mt-2 mb-4 text-uppercase display-6 fw-bold text-center">
             Noticias
           </Card.Title>
-          <Form className="container-wrapper mt-2">
+          <Form onSubmit={handleSubmit(onSubmit)}>
             <Form.Group
-              as={Row}
               className="justify-content-center align-items-center mb-3"
-              controlId="nombreNoticias"
+              controlId="formCategory"
+              as={Row}
             >
               <Col md={2}>
-                <Form.Label className="fw-bold mb-3">
-                  Buscar por categoria:{' '}
-                </Form.Label>
+                <Form.Label>Buscar por categoria</Form.Label>
               </Col>
               <Col md={6}>
-                <Form.Select className="mb-3" aria-label="generoSelect">
-                  <option>Seleccione una opción...</option>
-                  <option value="Políticas">Políticas</option>
-                  <option value="Deportes">Deportes</option>
-                  <option value="Economía">Economía</option>
-                  <option value="Seguridad">Seguridad</option>
+                <Form.Select
+                  aria-label="Seleccione una categoria:"
+                  {...register('categoria', {
+                    required: 'Debe seleccionar una categoria',
+                  })}
+                >
+                  <option value="">Seleccione una opcion:</option>
+                  <option value="science">Ciencia</option>
+                  <option value="sports">Deportes</option>
+                  <option value="health">Salud</option>
+                  <option value="technology">Tecnologia</option>
                 </Form.Select>
               </Col>
             </Form.Group>
+            <Button variant="primary" type="submit">
+              Enviar
+            </Button>
           </Form>
         </Card.Body>
       </Card>
